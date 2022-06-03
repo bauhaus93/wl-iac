@@ -1,0 +1,6 @@
+.ssh/
+.vagrant/
+.terraform/
+*.tfvars
+*.tfstate*
+*.lock.hcl

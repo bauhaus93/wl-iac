@@ -1,0 +1,13 @@
+nginx_user: www-data
+nginx_vhosts:
+  - listen: "80 default_server"
+    server_name: logs.test
+    extra_parameters: |
+      location / {
+        proxy_pass http://0.0.0.0:5601;
+        proxy_set_header Authorization "";
+        proxy_read_timeout 90s;
+      }
+
+elk_version: 8.2.2
+docker_network: elk_network

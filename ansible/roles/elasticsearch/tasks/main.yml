@@ -1,0 +1,15 @@
+- name: Pull elasticsearch image, if version '{{ elk_version }}' not present
+  community.docker.docker_image:
+    name: "{{ elasticsearch_image }}"
+    source: pull
+
+- name: Start elasticsearch container, if not running
+  community.docker.docker_container:
+    name: "{{ elasticsearch_container }}"
+    image: "{{ elasticsearch_image }}"
+    networks:
+      - name: "{{ docker_network }}"
+    env:
+      "discovery.type": single-node
+      ES_JAVA_OPTS: "-Xms{{ elastic_search_ram_usage }} -Xmx{{ elastic_search_ram_usage }}"
+    state: started

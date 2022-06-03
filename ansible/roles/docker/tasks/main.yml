@@ -1,0 +1,16 @@
+- name: Install dependencies from package manager
+  package:
+    name:
+      - docker
+    state: latest
+
+- name: Install Docker PIP dependencies, if missing
+  pip:
+    name:
+      - docker
+    state: latest
+
+- name: Start docker service, if not running
+  service:
+    name: docker
+    state: started

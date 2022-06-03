@@ -1,0 +1,23 @@
+- name: Install nginx from package manager
+  package:
+    name:
+      - nginx-mainline
+    state: latest
+
+- name: Create nginx user '{{ nginx_user }}', if missing
+  user:
+    name: "{{ nginx_user }}"
+    state: present
+
+- name: Create nginx.conf template
+  template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: "{{ nginx_user }}"
+    mode: "0664"
+
+- name: Enable nginx service, if not active
+  service:
+    name: nginx
+    state: started
+  become: true

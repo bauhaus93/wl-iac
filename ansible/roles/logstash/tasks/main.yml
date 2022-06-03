@@ -1,0 +1,12 @@
+- name: Pull logstash image, if version '{{ elk_version }}' not present
+  community.docker.docker_image:
+    name: "{{ logstash_image }}"
+    source: pull
+
+- name: Start logstash container, if not running
+  community.docker.docker_container:
+    name: "{{ logstash_container }}"
+    image: "{{ logstash_image }}"
+    networks:
+      - name: "{{ docker_network }}"
+    state: started

@@ -1,0 +1,44 @@
+- name: Get current TZ
+  stat:
+    path: /etc/localtime
+  register: timezone_file
+
+- name: "Set current TZ to {{ timezone }}, if not set"
+  file:
+    src: "/usr/share/zoneinfo/{{ timezone }}"
+    dest: /etc/localtime
+    state: link
+  when: timezone_file.stat.islnk is not defined or timezone_file.stat.path.find(timezone) == -1
+
+- name: Enable de_AT.UTF-8 locale, if not enabled
+  lineinfile:
+    path: /etc/locale.gen
+    regexp: '^#\sde_AT\.UTF-8 UTF-8'
+    line: "de_AT.UTF-8 UTF-8"
+  notify: Generate Locales
+
+- name: Set locale to de_AT.UTF8, if not set
+  lineinfile:
+    path: /etc/locale.conf
+    regex: "^LANG=.+"
+    line: "LANG=de_AT.UTF_8"
+
+- name: OS-specific setup
+  include_tasks: "setup-{{ ansible_os_family }}.yml"
+  when: ansible_os_family == "Archlinux"
+
+- name: Install tools from package manager
+  package:
+    name:
+      - ntp
+      - nginx-mainline
+      - python-pip
+    state: present
+
+- name: Start/Enable necessary services, if not running or enabled
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - ntpd
