@@ -12,4 +12,6 @@
     env:
       "discovery.type": single-node
       ES_JAVA_OPTS: "-Xms{{ elastic_search_ram_usage }} -Xmx{{ elastic_search_ram_usage }}"
+      ELASTIC_PASSWORD: "{{ elastic_default_password }}"
+      ELASTIC_SECURTY: "true"
     state: started

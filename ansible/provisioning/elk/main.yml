@@ -1,4 +1,5 @@
 - hosts: logs
+  become: true
 
   vars_files:
     - vars/main.yml
@@ -12,3 +13,30 @@
     - elasticsearch
     - kibana
       # - filebeat
+
+  tasks:
+    - name: Create kibana enrollment token
+      community.docker.docker_container_exec:
+        container: "{{ elasticsearch_container }}"
+        command: "/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana"
+      tags: [never, enrollment_token]
+      register: enrollment_token
+
+    - name: Output kibana enrollment token
+      debug:
+        msg: "{{ enrollment_token.stdout }}"
+      tags: [never, enrollment_token]
+
+    - name: Get kibana verification code
+      community.docker.docker_container_exec:
+        container: "{{ kibana_container }}"
+        command: "/usr/share/kibana/bin/kibana-verification-code"
+      changed_when: verification_code.stdout.find("Couldn't find verification code") == -1
+      tags: [always]
+      register: verification_code
+
+    - name: Output kibana verification code
+      debug:
+        msg: "{{ verification_code.stdout }}"
+      tags: [always]
+      when: verification_code.stdout.find("Couldn't find verification code") == -1

@@ -10,4 +10,5 @@ nginx_vhosts:
       }
 
 elk_version: 8.2.2
+elastic_default_password: "{{ lookup('env', 'ELASTIC_DEFAULT_PASSWORD') | default" }}
 docker_network: elk_network

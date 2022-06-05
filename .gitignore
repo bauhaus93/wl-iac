@@ -1,6 +1,8 @@
 .ssh/
 .vagrant/
 .terraform/
+.env
 *.tfvars
 *.tfstate*
 *.lock.hcl
+*.log

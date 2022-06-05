@@ -4,8 +4,8 @@ Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
 
   config.vm.provider :virtualbox do |v|
-    v.memory = 4096
-    v.cpus = 4
+    v.memory = 2048
+    v.cpus = 2
     v.linked_clone = true
   end
 
@@ -22,7 +22,6 @@ Vagrant.configure("2") do |config|
       ansible.config_file = "ansible/ansible.cfg"
       ansible.playbook = "ansible/provisioning/elk/main.yml"
       ansible.inventory_path = "ansible/provisioning/elk/inventory/hosts.ini"
-      ansible.become = true
     end
   end
 end
