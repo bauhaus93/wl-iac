@@ -27,7 +27,7 @@
         msg: "{{ enrollment_token.stdout }}"
       tags: [never, enrollment_token]
 
-    - name: Get kibana verification code
+    - name: Get kibana verification code, if existing
       community.docker.docker_container_exec:
         container: "{{ kibana_container }}"
         command: "/usr/share/kibana/bin/kibana-verification-code"
@@ -35,7 +35,7 @@
       tags: [always]
       register: verification_code
 
-    - name: Output kibana verification code
+    - name: Output kibana verification code, if existing
       debug:
         msg: "{{ verification_code.stdout }}"
       tags: [always]

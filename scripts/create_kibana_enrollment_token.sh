@@ -1,8 +1,5 @@
 #!/bin/sh
 
-PROJECT_ROOT="$(dirname $(readlink -f $0))/.."
-. "$PROJECT_ROOT/.env"
-
 ANSIBLE_CONFIG="$ANSIBLE_CFG" \
     ansible-playbook \
     -i "$ELK_PROVSIONING_DIR/inventory/hosts.ini" \
