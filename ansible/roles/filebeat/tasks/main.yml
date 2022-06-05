@@ -1,0 +1,23 @@
+- name: Check, if filebeat is installed
+  stat:
+    path: "/usr/share/filebeat-{{ elk_version }}-linux-x86_64"
+  register: filebeat_path
+
+- name: Download & Extract filebeat, if not installed
+  unarchive:
+    src: "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ elk_version }}-linux-x86_64.tar.gz"
+    dest: /usr/share
+    remote_src: yes
+    mode: "0741"
+  when: not filebeat_path.stat.exists
+
+- name: Create filebeat directory, if missing
+  file:
+    path: /usr/share/filebeat
+    state: directory
+
+- name: Create filebeat.yml template
+  template:
+    src: templates/filebeat.yml.j2
+    dest: /usr/share/filebeat-{{ elk_version }}-linux-x86_64/filebeat.yml
+    mode: "0664"

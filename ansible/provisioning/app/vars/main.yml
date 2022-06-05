@@ -1,6 +1,6 @@
 nginx_vhosts:
   - listen: "80 default_server"
-    server_name: logs.test
+    server_name: app.test
     extra_parameters: |
       location / {
         proxy_pass http://0.0.0.0:5601;
@@ -9,5 +9,3 @@ nginx_vhosts:
       }
 
 elk_version: "{{ lookup('env', 'ELK_VERSION') or '8.2.2' }}"
-elastic_default_password: "{{ lookup('env', 'ELASTIC_DEFAULT_PASSWORD') }}"
-docker_network: elk_network

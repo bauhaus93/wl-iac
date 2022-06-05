@@ -12,7 +12,7 @@
     - logstash
     - elasticsearch
     - kibana
-      # - filebeat
+    - filebeat
 
   tasks:
     - name: Create kibana enrollment token

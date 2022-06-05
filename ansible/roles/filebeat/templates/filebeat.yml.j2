@@ -1,0 +1,7 @@
+filebeat.inputs:
+
+output.logstash:
+  hosts:
+{% for host in (hostvars | dict2items | selectattr('key', 'in', groups.all) | map(attribute="value.ansible_fqdn")) %}
+    - {{ host }}:5044
+{% endfor %}

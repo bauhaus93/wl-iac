@@ -31,7 +31,9 @@
   package:
     name:
       - ntp
-      - nginx-mainline
+      - curl
+      - vim
+      - htop
       - python-pip
     state: present
 
@@ -42,3 +44,11 @@
     enabled: yes
   with_items:
     - ntpd
+
+      # - name: Adds lines to hosts file, if missing
+      #   lineinfile:
+      #     path: /etc/hosts
+      #     regexp: "^{{ item.ip4_address }} {{ item.hostname }}"
+      #     line: "{{ item.ip4_address }} {{ item.hostname }}"
+      #   with_items:
+      #     - { hostname: "logs.test", ip4_address: "192.168.56.10" }
