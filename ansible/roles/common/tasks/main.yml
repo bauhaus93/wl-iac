@@ -37,6 +37,22 @@
       - python-pip
     state: present
 
+- name: Update SSH configuration to improve security
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regex: "{{ item.regex }}"
+    line: "{{ item.line }}"
+    state: present
+    validate: "sshd -t -f %s"
+  with_items:
+    - regex: "^PasswordAuthentication"
+      line: "PasswordAuthentication no"
+    - regex: "^PermitRootLogin"
+      line: "PermitRootLogin no"
+    - regex: "^Port"
+      line: "Port 22"
+  notify: Restart SSH
+
 - name: Start/Enable necessary services, if not running or enabled
   service:
     name: "{{ item }}"

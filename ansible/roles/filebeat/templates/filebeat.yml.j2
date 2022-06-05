@@ -1,7 +1,15 @@
 filebeat.inputs:
+{% for log in filebeat_inputs %}
+  - type: {{ log.type }}
+    paths:
+    {% for path in log.paths %}
+      - "{{ path }}"
+    {% endfor %}
+{% endfor %}
+
 
 output.logstash:
   hosts:
-{% for host in (hostvars | dict2items | selectattr('key', 'in', groups.all) | map(attribute="value.ansible_fqdn")) %}
+{% for host in groups.logs %}
     - {{ host }}:5044
 {% endfor %}

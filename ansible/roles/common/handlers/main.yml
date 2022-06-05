@@ -1,2 +1,7 @@
 - name: Generate Locales
   command: locale-gen
+
+- name: Restart SSH
+  service:
+    name: sshd
+    state: restarted

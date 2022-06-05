@@ -14,10 +14,13 @@
     src: templates/nginx.conf.j2
     dest: /etc/nginx/nginx.conf
     owner: "{{ nginx_user }}"
+    group: "{{ nginx_user }}"
     mode: "0664"
+    validate: "nginx -t -c %s"
 
 - name: Enable nginx service, if not active
   service:
     name: nginx
     state: started
-  become: true
+    enabled: yes
+  become: yes

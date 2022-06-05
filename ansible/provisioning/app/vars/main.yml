@@ -9,3 +9,9 @@ nginx_vhosts:
       }
 
 elk_version: "{{ lookup('env', 'ELK_VERSION') or '8.2.2' }}"
+
+filebeat_inputs:
+  - type: log
+    paths:
+      - /var/log/nginx/access.log
+      - /var/log/nginx/error.log

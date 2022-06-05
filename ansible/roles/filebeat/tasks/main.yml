@@ -11,13 +11,16 @@
     mode: "0741"
   when: not filebeat_path.stat.exists
 
-- name: Create filebeat directory, if missing
+- name: Create filebeat symlink in /usr/bin
   file:
-    path: /usr/share/filebeat
-    state: directory
+    src: "/usr/share/filebeat-{{ elk_version }}-linux-x86_64/filebeat"
+    dest: /usr/local/bin/filebeat
+    state: link
 
 - name: Create filebeat.yml template
   template:
     src: templates/filebeat.yml.j2
     dest: /usr/share/filebeat-{{ elk_version }}-linux-x86_64/filebeat.yml
-    mode: "0664"
+    mode: "0644"
+    owner: root
+    validate: "filebeat test config -c %s"

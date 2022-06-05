@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
     app.vm.provision :ansible do |ansible |
       ansible.config_file = "ansible/ansible.cfg"
       ansible.playbook = "ansible/provisioning/elk/main.yml"
-      ansible.inventory_path = "ansible/provisioning/elk/inventory/hosts.ini"
+      ansible.inventory_path = "ansible/inventory"
     end
   end
 
@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
     app.vm.provision :ansible do |ansible |
       ansible.config_file = "ansible/ansible.cfg"
       ansible.playbook = "ansible/provisioning/app/main.yml"
-      ansible.inventory_path = "ansible/provisioning/app/inventory/hosts.ini"
+      ansible.inventory_path = "ansible/inventory"
     end
   end
 

@@ -2,6 +2,6 @@
 
 ANSIBLE_CONFIG="$ANSIBLE_CFG" \
     ansible-playbook \
-    -i "$ELK_PROVSIONING_DIR/inventory/hosts.ini" \
+    -i "$INVENTORY_FILE" \
     --tags enrollment_token \
     "$ELK_PROVSIONING_DIR/main.yml"
