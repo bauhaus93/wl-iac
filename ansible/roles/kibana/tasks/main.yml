@@ -11,5 +11,5 @@
     networks:
       - name: "{{ docker_network }}"
     env:
-      ELASTIC_SEARCH_HOSTS: http://0.0.0.0:9200
+      ELASTIC_SEARCH_HOSTS: http://elasticsearch:9200
     state: started

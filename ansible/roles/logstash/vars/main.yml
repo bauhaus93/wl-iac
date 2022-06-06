@@ -1,2 +1,14 @@
 logstash_image: docker.elastic.co/logstash/logstash:{{ elk_version }}
 logstash_container: logstash
+
+logstash_inputs: |
+  beats {
+    port => 5044
+    type => "beats"
+  }
+
+logstash_outputs: |
+  elasticsearch {
+    hosts => ["http://{{ elasticsearch_container }}:9200"]
+    ssl.verification_mode: 
+  }

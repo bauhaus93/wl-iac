@@ -3,10 +3,31 @@
     name: "{{ logstash_image }}"
     source: pull
 
+- name: Create logstash pipeline directory, if not existing
+  file:
+    path: /opt/pipeline
+    state: directory
+    owner: vagrant
+
+- name: Create logstash pipeline configuration, if not existing
+  template:
+    src: templates/logstash_pipeline.conf.j2
+    dest: /opt/pipeline/logstash_pipeline.conf
+    owner: vagrant
+
+- name: Get uid of user
+  command: id -u
+  changed_when: false
+  register: user_id
+
 - name: Start logstash container, if not running
   community.docker.docker_container:
     name: "{{ logstash_container }}"
     image: "{{ logstash_image }}"
+    published_ports: 5044:5044
+    user: "{{ user_id.stdout }}"
+    volumes:
+      - /opt/pipeline:/usr/share/logstash/pipeline
     networks:
       - name: "{{ docker_network }}"
     state: started
