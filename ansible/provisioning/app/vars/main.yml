@@ -15,3 +15,11 @@ filebeat_inputs:
     paths:
       - /var/log/nginx/access.log
       - /var/log/nginx/error.log
+
+firewall_open_ports:
+  - { port: 80, prot: tcp }
+  - { port: 22, prot: tcp }
+
+authorized_keys:
+  - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDKbyJY447jdeDk5y0aAgN3Rwc6EkEiJfyCL/xzgiZwWEEp3+AOZ6MIt6OIr9CyE1bglkcSDEcvGO0TWMLar+GSCzeI8s3r2yDmgy/qF7pCBfBjNc5d+4k5y0idOQKYNc5kHfDasK189q8Emi+O6IMttzwKKtlkMOa11t/mIOLCPeC5A6XPz05xQHRATgZigMp82jvAwwrojpoR7Ua+Z2k5ksrj+jJQIxyqnmQM5UpO9mthRrojzMEpKIpOOPHVlvW32WmGGDH145gaOBQtgnpQ7qw1myPaWgM/h6xhO8dU4gHmmZutLKZql/ooJLYl1vnFFjhmIp6daStsVqVqm
+    77ai+2mA1/c3DP1LbqZT0ScQWi6avM5C2uXLoZ7rQn/qCdGak9lrNYpwDVZsaROB36BgwgiqedXzcbC+DZS34udo55ZLvr14bQHFvkzDXtBAphqSzHd1TojZe2687PPX9mZ2HCwC/VtK+Zzn7WW9cfXvL7tQlqgjJQaanEWi04VWxc= jakob@jemandes-pc"

@@ -10,5 +10,4 @@ logstash_inputs: |
 logstash_outputs: |
   elasticsearch {
     hosts => ["http://{{ elasticsearch_container }}:9200"]
-    ssl.verification_mode: 
   }

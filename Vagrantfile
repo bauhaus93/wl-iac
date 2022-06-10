@@ -3,10 +3,11 @@ Vagrant.configure("2") do |config|
   config.vm.box = "archlinux/archlinux"
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  # config.ssh.insert_key = false
-  # config.ssh.private_key_path = ".ssh/id_rsa"
-  # config.ssh.forward_agent = true
+  config.ssh.insert_key = true
+  config.ssh.forward_agent = true
+  # config.ssh.private_key_path = "/home/jakob/.ssh/id_rsa"
   # config.ssh.username = "vagrant"
+  # config.ssh.password = "vagrant"
 
 
   config.vm.provider :virtualbox do |v|

@@ -11,5 +11,5 @@ filebeat.inputs:
 output.logstash:
   hosts:
 {% for host in groups.logs %}
-    - {{ host }}:5044
+    - {{ host }}:12345
 {% endfor %}

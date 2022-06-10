@@ -6,6 +6,7 @@
 
   roles:
     - common
+    - firewall
     - docker
     - docker_network
     - nginx

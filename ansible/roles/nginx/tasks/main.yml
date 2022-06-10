@@ -17,6 +17,7 @@
     group: "{{ nginx_user }}"
     mode: "0664"
     validate: "nginx -t -c %s"
+  notify: Restart nginx
 
 - name: Enable nginx service, if not active
   service:

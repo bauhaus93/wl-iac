@@ -35,7 +35,7 @@
       - vim
       - htop
       - python-pip
-    state: present
+    state: latest
 
 - name: Update SSH configuration to improve security
   lineinfile:
@@ -52,6 +52,13 @@
     - regex: "^Port"
       line: "Port 22"
   notify: Restart SSH
+
+- name: Authorize SSH keys
+  ansible.posix.authorized_key:
+    key: "{{ item }}"
+    state: present
+    user: vagrant
+  with_items: "{{ authorized_keys }}"
 
 - name: Start/Enable necessary services, if not running or enabled
   service:
