@@ -2,4 +2,4 @@
   package:
     name:
       - postgresql
-    state: present
+    state: latest

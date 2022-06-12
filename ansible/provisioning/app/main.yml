@@ -8,4 +8,4 @@
     - common
     - firewall
     - nginx
-    - filebeat
+    - docker

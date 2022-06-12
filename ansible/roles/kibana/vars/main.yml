@@ -1,2 +1,0 @@
-kibana_image: docker.elastic.co/kibana/kibana:{{ elk_version }}
-kibana_container: kibana

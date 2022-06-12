@@ -1,0 +1,56 @@
+- hosts: app
+
+  vars_files: main.yml
+
+  tasks:
+    - name: Pull base arch linux image, if not existing
+      docker_image:
+        name: "archlinux:latest"
+        state: present
+        source: pull
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Remove build image, if complete build and existing
+      docker_image:
+        state: absent
+        name: "{{ build_img_name }}"
+        tag: latest
+      delegate_to: localhost
+      run_once: yes
+      tags: [build_full]
+
+    - name: Remove executable image, if existing
+      docker_image:
+        state: absent
+        name: "{{ executable_img_name }}"
+        tag: latest
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Create backend image for building, if not existing
+      docker_image:
+        build:
+          path: "{{ backend_build_dir }}"
+          dockerfile: "{{ backend_build_dir }}/docker/Dockerfile-build"
+          rm: yes
+        name: "{{ build_img_name }}"
+        state: present
+        source: build
+        push: no
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Create backend image for executable, if not existing
+      docker_image:
+        build:
+          path: "{{ backend_build_dir }}"
+          dockerfile: "{{ backend_build_dir }}/docker/Dockerfile"
+          rm: yes
+        name: "{{ executable_img_name }}"
+        state: present
+        force_source: yes
+        source: build
+        push: no
+      delegate_to: localhost
+      run_once: yes

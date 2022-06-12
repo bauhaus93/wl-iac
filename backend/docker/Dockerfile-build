@@ -1,0 +1,8 @@
+FROM archlinux:latest
+LABEL stage=wishlist-build
+RUN pacman -Syy && pacman --noconfirm -S gcc ca-certificates curl
+WORKDIR /build
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+ENV PATH "/root/.cargo/bin:$PATH"
+COPY . .
+RUN scripts/build.sh

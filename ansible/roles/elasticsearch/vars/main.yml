@@ -1,3 +1,0 @@
-elasticsearch_image: docker.elastic.co/elasticsearch/elasticsearch:{{ elk_version }}
-elasticsearch_container: elasticsearch
-elastic_search_ram_usage: "4096m"
