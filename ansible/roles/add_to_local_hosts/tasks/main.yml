@@ -1,0 +1,12 @@
+- name: Output
+  debug:
+    msg: "{{ hostvars }}"
+
+- name: Add or replace hostname to local hosts file, if missing
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "^{{ hostvars[item]['ansible_default_ipv4']['address'] }}\t{{ ansible_hostname }}"
+    line: "{{ hostvars[item]['ansible_default_ipv4']['address'] }}\t{{ ansible_hostname }}"
+    state: present
+  with_items: "{{ groups['all'] }}"
+  delegate_to: localhost
